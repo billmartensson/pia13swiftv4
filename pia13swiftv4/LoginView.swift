@@ -6,10 +6,10 @@
 //
 
 import SwiftUI
-import FirebaseCore
-import FirebaseAuth
 
 struct LoginView: View {
+    
+    @State var todofb = TodoFB()
     
     @State var email = ""
     @State var password = ""
@@ -17,20 +17,21 @@ struct LoginView: View {
     var body: some View {
         VStack {
             Text("LOGIN")
+            
+            if todofb.loginerror != nil {
+                Text(todofb.loginerror!)
+            }
+            
             TextField("Email", text: $email)
             TextField("Password", text: $password)
 
             Button(action: {
-                Task {
-                    await userLogin()
-                }
+                todofb.userLogin(email: email, password: password)
             }) {
                 Text("Login")
             }
             Button(action: {
-                Task {
-                    await userRegister()
-                }
+                todofb.userRegister(email: email, password: password)
             }) {
                 Text("Register")
             }
@@ -38,23 +39,7 @@ struct LoginView: View {
         .padding()
     }
     
-    func userLogin() async {
-        do {
-            try await Auth.auth().signIn(withEmail: email, password: password)
-        } catch {
-            print("FEL LOGIN")
-        }
-    }
     
-    func userRegister() async {
-        do {
-            let regResult = try await Auth.auth().createUser(withEmail: email, password: password)
-            
-            
-        } catch {
-            print("FEL REG")
-        }
-    }
     
 }
 
