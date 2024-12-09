@@ -1,0 +1,38 @@
+
+"shop": {
+    "users": {
+        "u1": {
+            "name": "Arne"
+        },
+        "u2": {
+            "name": "Bertil"
+        }
+    },
+    "shoppinglists": {
+        "auto1": {
+            "name": "Handla mat",
+            "owner": "u1",
+            "invited": [{"uid": "u2", "name": "Bertil"}]
+        }
+    }
+    "shopitems": {
+        "autoitem1": {
+            "list": "auto1",
+            "item": "Smör",
+            "amount": 2
+        }
+    }
+}
+
+
+RULES
+
+{
+    "shop": {
+        "shoppinglists": {
+            "$list": {
+                ".read": ".owner == auth.uid || .invited.includes(auth.uid)"
+            }
+        }
+    }
+}

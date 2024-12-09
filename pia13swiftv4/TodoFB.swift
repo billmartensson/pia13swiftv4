@@ -50,6 +50,8 @@ import FirebaseAuth
         
         let userid = Auth.auth().currentUser!.uid
         
+        //let userid = "p7UeB2s3cdb6FET01Od51aMwYg22"
+        
         var ref: DatabaseReference!
 
         ref = Database.database().reference()
